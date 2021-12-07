@@ -8,11 +8,11 @@ module.exports = {
     for(let i = 0; i < 100; i++) {
       data.push({
         id: i,
-        email: faker.internet.email(),
-        birthDate: faker.date(),
-        name: faker.Name(),
-        password:faker.lorem.sentence(),
-        friendsNumber:faker.datatype.number(),
+        name: Faker.TvShows.TheITCrowd.quote(),
+        adress: faker.adress(),
+        organiser: faker.Name(),
+        startDate: faker.date(),
+        endDate: faker.date(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -40,4 +40,3 @@ module.exports = {
      await queryInterface.bulkDelete('Users', null, {});
   }
 };
-

@@ -2,7 +2,7 @@ const db = require('../models');
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const allUsers = await db.User.findAll();
+    const allUsers = await db.Users.findAll();
     res.send(allUsers);
   } catch (error) {
     console.error('Something went wrong');
@@ -12,12 +12,12 @@ module.exports.getAllUsers = async (req, res) => {
   } 
 }
 
-// Return User
-module.exports.getUserById = (req, res) => {
+// Return Users
+module.exports.getUsersById = (req, res) => {
   
 }
 
-module.exports.createUser = async (req, res) => {
+module.exports.createUsers = async (req, res) => {
   const {
     name,
     birthDate,
@@ -27,7 +27,7 @@ module.exports.createUser = async (req, res) => {
   } = req.body
 
   try {
-    const newUser = await db.User.create({
+    const newUsers = await db.Users.create({
         name,
         birthDate,
         email,
@@ -35,7 +35,7 @@ module.exports.createUser = async (req, res) => {
         friendsNumber,
     });
 
-    res.status(201).send(newUser);
+    res.status(201).send(newUsers);
   } catch (error) {
     console.error(error);
     res.send({
@@ -44,12 +44,12 @@ module.exports.createUser = async (req, res) => {
   }
 }
 
-// Updated User
-module.exports.updateUser = (req, res) => {
+
+module.exports.updateUsers = (req, res) => {
   
 }
 
-// Nothing
-module.exports.deleteUser = (req, res) => {
+
+module.exports.deleteUsers = (req, res) => {
   
 }

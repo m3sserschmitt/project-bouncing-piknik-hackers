@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Coments', {
+    await queryInterface.createTable('EventUsers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,11 +17,14 @@ module.exports = {
           key: 'id',
         },
       },
-      text: {
-        type: Sequelize.STRING
-      },
-      likes: {
-        type: Sequelize.INTEGER
+      eventsId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Events'
+          },
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Coments');
+    await queryInterface.dropTable('EventUsers');
   }
 };
