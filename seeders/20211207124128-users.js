@@ -9,8 +9,8 @@ module.exports = {
       data.push({
         id: i,
         email: faker.internet.email(),
-        birthDate: faker.date(),
-        name: faker.Name(),
+        birthDate: faker.date.between('1960-01-01', '2002-12-31'),
+        name: faker.name.firstName(),
         password:faker.lorem.sentence(),
         friendsNumber:faker.datatype.number(),
         createdAt: new Date(),

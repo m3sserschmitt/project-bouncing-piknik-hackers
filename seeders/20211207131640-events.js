@@ -8,11 +8,11 @@ module.exports = {
     for(let i = 0; i < 100; i++) {
       data.push({
         id: i,
-        name: Faker.TvShows.TheITCrowd.quote(),
-        adress: faker.adress(),
-        organiser: faker.Name(),
-        startDate: faker.date(),
-        endDate: faker.date(),
+        name: faker.lorem.word(),
+        adress: faker.address.zipCode(),
+        organiser: faker.name.firstName(),
+        startDate: faker.date.between('2022-01-01', '2022-12-31'),
+        endDate: faker.date.between('2023-01-01', '2023-12-31'),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

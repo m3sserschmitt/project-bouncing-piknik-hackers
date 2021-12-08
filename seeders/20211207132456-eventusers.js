@@ -4,13 +4,17 @@ const db = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const userId = Math.floor(Math.random() * (allUsers.length - 1));
-    const eventsId = Math.floor(Math.random() * (allEvents.length - 1));
-    const EventUsers = [];
+    const allUsers = await db.Users.findAll();
+    const allEvents = await db.Events.findAll();
+    const eventusers = [];
     for(let i = 0; i < 100; i++) {
       
-      data.push({
+    const userId = Math.floor(Math.random() * (allUsers.length - 1));
+    const eventsId = Math.floor(Math.random() * (allEvents.length - 1));
+      eventusers.push({
         id: i,
+        userId,
+        eventsId,
         createdAt: new Date(),
         updatedAt: new Date(),
       });

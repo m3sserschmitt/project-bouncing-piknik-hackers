@@ -9,8 +9,9 @@ module.exports = {
     for(let i = 0; i < db.Users.friendsNumber; i++) {
       const userId = Math.floor(Math.random() * (allUsers.length - 1));
       coments.push({
+        id: i,
         userId,
-        name: faker.name.Name(),
+        name: faker.name.firstName(),
         createdAt: new Date(),
         updatedAt: new Date(),
       })
