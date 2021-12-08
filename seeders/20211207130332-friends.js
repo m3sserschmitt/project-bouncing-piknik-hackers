@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 const faker = require('faker');
 const db = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const allUsers = await db.User.findAll();
+    const allUsers = await db.Users.findAll();
     const coments = [];
-    for(let i = 0; i < models.User.friendsNumber; i++) {
+    for(let i = 0; i < db.Users.friendsNumber; i++) {
       const userId = Math.floor(Math.random() * (allUsers.length - 1));
       coments.push({
         userId,

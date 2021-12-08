@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const faker = require('faker');
 const db = require('../models');
 

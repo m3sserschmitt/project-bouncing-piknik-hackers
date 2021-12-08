@@ -1,6 +1,6 @@
-'use strict';
-const { fake } = require('faker');
+'use strict'
 const faker = require('faker');
+const db = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -18,7 +18,7 @@ module.exports = {
       });
     }
 
-    await queryInterface.bulkInsert('Users', data, {});
+    await queryInterface.bulkInsert('Events', data, {});
     /**
      * Add seed commands here.
      *
@@ -37,6 +37,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-     await queryInterface.bulkDelete('Users', null, {});
+     await queryInterface.bulkDelete('Events', null, {});
   }
 };

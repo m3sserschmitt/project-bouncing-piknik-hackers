@@ -1,6 +1,6 @@
-'use strict';
-const { fake } = require('faker');
+'use strict'
 const faker = require('faker');
+const db = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
