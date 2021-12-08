@@ -6,12 +6,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const allUsers = await db.Users.findAll();
     const allEvents = await db.Events.findAll();
-    const eventusers = [];
+    const data = [];
     for(let i = 0; i < 100; i++) {
       
     const userId = Math.floor(Math.random() * (allUsers.length - 1));
     const eventsId = Math.floor(Math.random() * (allEvents.length - 1));
-      eventusers.push({
+      data.push({
         id: i,
         userId,
         eventsId,
@@ -19,7 +19,7 @@ module.exports = {
         updatedAt: new Date(),
       });
   }
-  await queryInterface.bulkInsert('EventUsers', EventUsers , {});
+  await queryInterface.bulkInsert('EventUsers', data , {});
 },
 
   down: async (queryInterface, Sequelize) => {
