@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const handleGreeting = require('./controllers/greeting');
+// const handleGreeting = require('./controllers/greeting');
 const { port } = require('./config/express');
-const authorizationMiddleware = require('./middlewares/authorization');
-const loginHandler = require('./controllers/login');
+// const authorizationMiddleware = require('./middlewares/authorization');
+// const loginHandler = require('./controllers/login');
 const { getAllUsers, getUsersById, createUsers, updateUsers, deleteUsers } = require('./controllers/users');
 const { getAllPosts, getPostsById, createPosts, updatePosts, deletePosts } = require('./controllers/posts');
 
