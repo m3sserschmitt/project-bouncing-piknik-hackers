@@ -2,7 +2,7 @@ const db = require('../models');
 
 module.exports.getAllPosts = async (req, res) => {
   try {
-    const allPosts = await db.Posts.findAll();
+    const allPosts = await db.Post.findAll();
     res.send(allPosts);
   } catch (error) {
     console.error('Something went wrong');
@@ -16,7 +16,7 @@ module.exports.getAllPosts = async (req, res) => {
 module.exports.getPostsById = (req, res) => {
     const postsId = req.params.id;
     try{
-        const posts = await db.Posts.findByPk({
+        const posts = await db.Post.findByPk({
             id: postsId,
         });
         res.send(posts);
@@ -36,7 +36,7 @@ module.exports.createPosts = async (req, res) => {
   } = req.body
 
   try {
-    const newPosts = await db.Posts.create({
+    const newPosts = await db.Post.create({
         likes,
         photo,
         text

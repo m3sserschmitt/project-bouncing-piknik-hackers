@@ -11,11 +11,20 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      adress: {
+      address: {
         type: Sequelize.STRING
       },
-      organiser: {
+      description: {
         type: Sequelize.STRING
+      },
+      organizerId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users'
+          },
+          key: 'id',
+        }
       },
       startDate: {
         type: Sequelize.DATE
@@ -23,6 +32,7 @@ module.exports = {
       endDate: {
         type: Sequelize.DATE
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

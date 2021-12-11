@@ -17,7 +17,7 @@ module.exports = {
           key: 'id',
         },
       },
-      eventsId: {
+      eventId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -25,14 +25,6 @@ module.exports = {
           },
           key: 'id',
         },
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

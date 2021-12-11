@@ -1,9 +1,9 @@
 const db = require('../models');
 
-module.exports.getAllComents = async (req, res) => {
+module.exports.getAllComments = async (req, res) => {
   try {
-    const allComents = await db.Coments.findAll();
-    res.send(allComents);
+    const allComments = await db.Comment.findAll();
+    res.send(allComments);
   } catch (error) {
     console.error('Something went wrong');
     res.send({
@@ -13,13 +13,13 @@ module.exports.getAllComents = async (req, res) => {
 }
 
 
-module.exports.getComentsById = (req, res) => {
-    const comentsId = req.params.id;
+module.exports.getCommentsById = (req, res) => {
+    const commentsId = req.params.id;
     try{
-        const coments = await db.coments.findByPk({
-            id: comentsId,
+        const comments = await db.Comments.findByPk({
+            id: commentsId,
         });
-        res.send(coments);
+        res.send(comments);
     }catch (error) {
         console.error('Something went wrong');
         res.send({
@@ -28,19 +28,19 @@ module.exports.getComentsById = (req, res) => {
       } 
 }
 
-module.exports.createComents = async (req, res) => {
+module.exports.createComments = async (req, res) => {
   const {
         likes,
         text
   } = req.body
 
   try {
-    const newComents = await db.Coments.create({
+    const newComments = await db.Comment.create({
         likes,
         text
     });
 
-    res.status(201).send(newComents);
+    res.status(201).send(newComments);
   } catch (error) {
     console.error(error);
     res.send({
@@ -50,11 +50,11 @@ module.exports.createComents = async (req, res) => {
 }
 
 
-module.exports.updateComents = (req, res) => {
+module.exports.updateComments = (req, res) => {
   
 }
 
 
-module.exports.deleteComents = (req, res) => {
+module.exports.deleteComments = (req, res) => {
   
 }

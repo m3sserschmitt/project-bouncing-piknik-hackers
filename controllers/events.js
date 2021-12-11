@@ -2,7 +2,7 @@ const db = require('../models');
 
 module.exports.getAllEvents = async (req, res) => {
   try {
-    const allEvents = await db.Events.findAll();
+    const allEvents = await db.Event.findAll();
     res.send(allEvents);
   } catch (error) {
     console.error('Something went wrong');
@@ -20,17 +20,17 @@ module.exports.getEventsById = (req, res) => {
 module.exports.createEvents = async (req, res) => {
   const {
     name,
-    adress,
-    organiser,
+    address,
+    organizer,
     startDate,
     endDate,
   } = req.body
 
   try {
-    const newEvents = await db.Events.create({
+    const newEvents = await db.Event.create({
         name,
-        adress,
-        organiser,
+        address,
+        organizer,
         startDate,
         endDate,
     });

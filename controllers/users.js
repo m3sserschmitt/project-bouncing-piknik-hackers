@@ -2,7 +2,7 @@ const db = require('../models');
 
 module.exports.getAllUsers = async (req, res) => {
   try {
-    const allUsers = await db.Users.findAll();
+    const allUsers = await db.User.findAll();
     res.send(allUsers);
   } catch (error) {
     console.error('Something went wrong');
@@ -27,7 +27,7 @@ module.exports.createUsers = async (req, res) => {
   } = req.body
 
   try {
-    const newUsers = await db.Users.create({
+    const newUsers = await db.User.create({
         name,
         birthDate,
         email,

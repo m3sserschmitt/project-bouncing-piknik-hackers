@@ -4,19 +4,19 @@ const db = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const allUsers = await db.Users.findAll();
-    const allEvents = await db.Events.findAll();
+    const allUsers = await db.User.findAll();
+    const allEvents = await db.Event.findAll();
     const data = [];
+
     for(let i = 0; i < 100; i++) {
       
     const userId = Math.floor(Math.random() * (allUsers.length - 1));
-    const eventsId = Math.floor(Math.random() * (allEvents.length - 1));
+    const eventId = Math.floor(Math.random() * (allEvents.length - 1));
+
       data.push({
         id: i,
         userId,
-        eventsId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        eventId
       });
   }
   await queryInterface.bulkInsert('EventUsers', data , {});
