@@ -7,7 +7,7 @@ const {
 
 const schema = new GraphQLSchema({
     query:queryType,
-     mutation: mutationType,
+    mutation: mutationType,
 });
 
 module.exports = schema;

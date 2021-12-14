@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken'),
-    secretKey = require('../config/jwt'),
+    { MY_SECRET_KEY } = require('../config/jwt'),
     db = require('../models');
 
 
-const loginHandler = async (email, password) => {
+const loginHandler = async ({ email, password }) => {
     const user = await db.User.findOne({
         where: {
             email,
@@ -12,7 +12,10 @@ const loginHandler = async (email, password) => {
     });
 
     if (user) {
-        return jwt.sign({ id: user.id }, secretKey);
+        const token = jwt.sign({
+            id: user.id,
+          }, MY_SECRET_KEY);
+        return token;
     } else {
         return null;
     }

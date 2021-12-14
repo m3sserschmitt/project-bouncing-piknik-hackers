@@ -1,91 +1,65 @@
 const {
     GraphQLObjectType, GraphQLString, GraphQLNonNull,
-} =require('graphql');
-const { extendSchemaImpl } = require('graphql/utilities/extendSchema');
+} = require('graphql');
+
+//const { extendSchemaImpl } = require('graphql/utilities/extendSchema');
+
 const loginHandler = require('../repository/login');
+const { createUser, updateUser } = require('../repository/user');
+
 const createUserInputType = require('./inputTypes/createUserInputType');
 const updateUserInputType = require('./inputTypes/updateUserInputType');
 
 const loginInputType = require('./inputTypes/loginInputType');
-const loginType = require('./types/loginType');
+
+const loginResultType = require('./types/loginResultType');
 const userType = require('./types/userType');
-const db = require('../models');
+
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
-    fields:{
-        login: {
-            type: loginType,
+    fields: {
+
+        login: { // checked
+            type: loginResultType,
             args: {
                 loginInput: {
                     type: loginInputType
                 },
             },
-            resolve: (source, args) => {
-                const {email, password} = args.loginInput;
-                console.log('email', email);
-                console.log('pass', password);
-                const token = loginHandler(email, password)
-                return {
-                    token,
-                }
+            resolve: async (_, { loginInput }) => {
+                const token = await loginHandler(loginInput);
+                return { token };
             }
         },
-        createUser: {
+
+        createUser: { // checked
             type: userType,
             args: {
-                createUserInput: {
+                userInput: {
                     type: createUserInputType,
                 }
             },
-            resolve: async (source,args)=> {
-                const {email, password,firstName,lastName} = args.createUserInput;
-                
-                try {
-                    const newUser = await db.User.create({
-                        email,
-                        password,
-                        firstName,
-                        lastName,
-                    });
+            resolve: async (_, { userInput }) => {
 
-                    return newUser;
-
-                } catch (error) {
-                    console.error(error);
-                    return null;
-                }
-
+                return await createUser(userInput);
             }
         },
-        updateUser: {
+
+        updateUser: {  // checked
             type: userType,
             args: {
-                updateUserInput: {
+                userInput: {
                     type: updateUserInputType,
                 },
             },
-            resolve: async (source,args,{user}) => {
-                if(!user){
-                    return null; 
-                }
-                const {id} = user;
-                const { email, firstName, lastName} = args.updateUserInput;
-                try {
-                    await db.User.update({
-                        email, 
-                        firstName,
-                        lastName,
-                    }, {where: {id}});
+            resolve: async (_, { userInput }, { user }) => {
 
-                    return await db.User.findByPk(id);
-
-                }catch(e){
-                    console.error(e);
+                // check if user is authenticated
+                if (!user) {
                     return null;
                 }
-                {
 
-                }
+                return await updateUser(user.id, userInput);
             }
         }
     },

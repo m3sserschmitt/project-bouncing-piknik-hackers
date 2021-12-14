@@ -9,33 +9,40 @@ const db = require('../models');
 const userType = require('./types/userType');
 const postType = require('./types/postType');
 
+const {getAllUsers, getUserById} = require("../repository/user");
+const {getAllPosts, getPostById} = require("../repository/post")
+
 const queryType = new GraphQLObjectType({
     name: "Query",
     fields: {
-        users: {
+
+        users: { // checked
             type: new GraphQLList(userType),
             resolve: async () => {
-                return await db.User.findAll();
+                return await getAllUsers();
             }
         },
-        user: {
+
+        user: { // checked
             type: userType,
             args: {
                 id: {
                     type: new GraphQLNonNull(GraphQLID),
                 }
             },
-            resolve: async (source, { id },context) => {
-                return await db.User.findByPk(id)
+            resolve: async (_, { id }) => {
+                return await getUserById(id);
             }
         },
-        posts: {
+
+        posts: { // checked
             type: new GraphQLList(postType),
             resolve: async () => {
-                return await db.Post.findAll();
+                return await getAllPosts();
             }
         },
-        post: {
+
+        post: { // checked
             type: postType,
             args: {
                 id: {
@@ -43,8 +50,7 @@ const queryType = new GraphQLObjectType({
                 }
             },
             resolve: async (source, { id }) => {
-                const post = await db.Post.findByPk(id);
-                return post;
+                return await getPostById(id);
             }
         },
     }

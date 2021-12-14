@@ -18,8 +18,9 @@
     "init": "^0.1.2",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.0.0",
+    "nodemon": "^2.0.15",
     "sequelize": "^6.12.0-beta.2",
     "sequelize-cli": "^6.3.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^4.2.0"
   }
 }

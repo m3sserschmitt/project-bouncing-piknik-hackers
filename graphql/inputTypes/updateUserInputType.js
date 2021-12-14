@@ -1,15 +1,18 @@
 const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString, graphql } = require("graphql");
 
 const updateUserInputType = new GraphQLInputObjectType({
-    name: 'updateUserInput',
+    name: 'UpdateUserInput',
     fields: {
         email: {
             type: new GraphQLNonNull(GraphQLString),
         },
+        password: {
+            type: GraphQLString,
+        },
         firstName: {
             type: GraphQLString
         },
-        lasttName: {
+        lastName: {
             type: GraphQLString
         },
         birthDate: {
