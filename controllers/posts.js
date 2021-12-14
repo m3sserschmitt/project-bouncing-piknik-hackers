@@ -13,7 +13,7 @@ module.exports.getAllPosts = async (req, res) => {
 }
 
 
-module.exports.getPostsById = (req, res) => {
+module.exports.getPostsById = async (req, res) => {
     const postsId = req.params.id;
     try{
         const posts = await db.Post.findByPk({
