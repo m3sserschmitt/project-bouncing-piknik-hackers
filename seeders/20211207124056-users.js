@@ -22,7 +22,7 @@ module.exports = {
          birthDate: faker.date.between('1960-01-01', '2002-12-31'),
          firstName: faker.name.firstName(),
          lastName: faker.name.lastName(),
-         password:faker.lorem.sentence(),
+         password:faker.internet.password(8, true),
          friendsNumber:faker.datatype.number(),
          createdAt: new Date(),
          updatedAt: new Date(),
