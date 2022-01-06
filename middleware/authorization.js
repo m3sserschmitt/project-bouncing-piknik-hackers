@@ -16,6 +16,8 @@ const authorizationMiddleware = async (req, res, next) => {
             if (user) {
                 req.user = user;
                 next();
+            } else  {
+                next();
             }
         } catch (e) {
             console.error('error', e)

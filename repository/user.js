@@ -1,26 +1,14 @@
 const db = require('../models');
 
-module.exports.getAllUsers = async () => {
-    try {
-        const allUsers = await db.User.findAll();
-
-        return allUsers;
-
-      } catch (error) {
-
-        console.error('Error on querying database for users', error);
-
-        return null;
-      } 
-}
-
-module.exports.createUser = async ({ email, password, firstName, lastName }) => {
+// CREATE
+module.exports.createUser = async ({ email, password, firstName, lastName, birthDate }) => {
     try {
         const newUser = await db.User.create({
             email,
             password,
             firstName,
-            lastName
+            lastName,
+            birthDate: new Date(birthDate)
         });
 
         return newUser;
@@ -30,6 +18,7 @@ module.exports.createUser = async ({ email, password, firstName, lastName }) => 
     }
 }
 
+// READ
 module.exports.getUserById = async (id) => {
     try {
         const user = await db.User.findByPk(id);
@@ -43,15 +32,22 @@ module.exports.getUserById = async (id) => {
     }
 }
 
+module.exports.getAllUsers = async () => {
+    try {
+        const allUsers = await db.User.findAll();
+
+        return allUsers;
+
+    } catch (error) {
+
+        console.error('Error on querying database for users: ', error);
+
+        return null;
+    }
+}
+
+// UPDATE
 module.exports.updateUser = async (userId, { email, password, firstName, lastName, birthDate }) => {
-
-    // we need to update only those properties which are not null
-    // const nonNullProperties = Object.entries({ email, password, firstName, lastName, birthDate })
-    //     .filter(([userProperty, propertyValue]) => propertyValue !== null && propertyValue !== undefined)
-    //     .map(([userProperty, propertyValue]) => [userProperty, propertyValue]);
-
-    // const nonNullUserProperties = Object.fromEntries(nonNullProperties);
-
     try {
 
         await db.User.update({
@@ -70,9 +66,27 @@ module.exports.updateUser = async (userId, { email, password, firstName, lastNam
         return await db.User.findByPk(userId);
 
     } catch (error) {
-        console.log('Error on updating user', error);
+        console.log('Error on updating user: ', error);
         return null;
     }
+}
 
-    return null;
+// DELETE
+module.exports.deleteUser = async userId => {
+    try {
+
+        let user = await db.User.findByPk(userId);
+
+        if(!user)
+        {
+            return null;
+        }
+
+        user.destroy();
+
+        return user;
+    } catch (error) {
+        console.log('Error on deleting user: ', error);
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString, graphql } = require("graphql");
+const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } = require("graphql");
 
 const createUserInputType = new GraphQLInputObjectType({
     name: 'CreateUserInput',
@@ -10,11 +10,14 @@ const createUserInputType = new GraphQLInputObjectType({
             type: new GraphQLNonNull(GraphQLString),
         },
         firstName: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
         },
         lastName: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
         },
+        birthDate: {
+            type: GraphQLString
+        }
     }
 });
 
