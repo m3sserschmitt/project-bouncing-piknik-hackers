@@ -1,6 +1,7 @@
 const {
     GraphQLObjectType,
     GraphQLString,
+    GraphQLInt,
     GraphQLID,
     GraphQLNonNull,
 } = require('graphql');
@@ -13,7 +14,7 @@ const postType = new GraphQLObjectType({
             type: GraphQLID
         },
         likes: {
-            type: GraphQLString
+            type: GraphQLInt
         },
         photo: {
             type: GraphQLString
@@ -23,8 +24,8 @@ const postType = new GraphQLObjectType({
         },
         author: {
             type: userType,
-            resolve: async (source) => {
-                return await source.getUser();
+            resolve: async (post) => {
+                return await post.getUser();
             }
         }
     }

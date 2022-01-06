@@ -8,10 +8,13 @@ const createUserInputType = require('./inputTypes/createUserInputType');
 const updateUserInputType = require('./inputTypes/updateUserInputType');
 
 const loginInputType = require('./inputTypes/loginInputType');
-
 const loginResultType = require('./types/loginResultType');
+
 const userType = require('./types/userType');
-const deleteUserResultType = require('./types/deleteUserResultType')
+
+const createPostInputType = require('./inputTypes/createPostInputType');
+const postType = require('./types/postType');
+const { createPost } = require('../repository/post');
 
 
 const mutationType = new GraphQLObjectType({
@@ -65,6 +68,7 @@ const mutationType = new GraphQLObjectType({
         deleteUser: { // checked
             type: userType,
             args: {
+                // request user password when deleting account, for better security
                 userPassword: {
                     type: GraphQLString
                 }
@@ -77,6 +81,22 @@ const mutationType = new GraphQLObjectType({
                 }
 
                 return await deleteUser(user.id);
+            }
+        },
+
+        createPost: {
+            type: postType,
+            args: {
+                createPostInput: {
+                    type: createPostInputType
+                }
+            },
+            resolve: async (_, { text, photo }, { user }) => {
+                if (!user) {
+                    return null;
+                }
+
+                return await createPost(text, photo);
             }
         }
     },
