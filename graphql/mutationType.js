@@ -1,20 +1,24 @@
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull } = require('graphql');
 
-const { loginHandler } = require('../repository/login');
-const loginInputType = require('./inputTypes/loginInputType');
-const loginResultType = require('./types/loginResultType');
+const loginInputType = require('./inputTypes/loginInputType'),
+    loginResultType = require('./types/loginResultType'),
+    { loginHandler } = require('../repository/login');
+
+const userType = require('./types/userType'),
+    createUserInputType = require('./inputTypes/createUserInputType'),
+    updateUserInputType = require('./inputTypes/updateUserInputType'),
+    { createUser, updateUser, deleteUser } = require('../repository/user');
 
 
-const { createUser, updateUser, deleteUser } = require('../repository/user');
-const userType = require('./types/userType');
-const createUserInputType = require('./inputTypes/createUserInputType');
-const updateUserInputType = require('./inputTypes/updateUserInputType');
+const postType = require('./types/postType'),
+    createPostInputType = require('./inputTypes/createPostInputType'),
+    updatePostInputType = require('./inputTypes/updatePostInputType'),
+    { createPost, updatePost, deletePost } = require('../repository/post');
 
-
-const { createPost, updatePost, deletePost } = require('../repository/post');
-const postType = require('./types/postType');
-const createPostInputType = require('./inputTypes/createPostInputType');
-const updatePostInputType = require('./inputTypes/updatePostInputType');
+const commentType = require('./types/commentType'),
+    createCommentInputType = require('./inputTypes/createCommentInputType'),
+    updateCommentInputType = require('./inputTypes/updateCommentInputType'),
+    { createComment, updateComment, deleteComment } = require('../repository/comment');
 
 
 const mutationType = new GraphQLObjectType({
@@ -112,6 +116,39 @@ const mutationType = new GraphQLObjectType({
 
                 return await deletePost(user, postId);
             }
+        },
+
+        createComment: {
+            type: commentType,
+            args: {
+                createCommentInput: {
+                    type: createCommentInputType
+                }
+            },
+            resolve: async (_, { createCommentInput }, { user }) => {
+
+                return await createComment(user, createCommentInput);
+            }
+        },
+
+        updateComment: {
+            type: commentType,
+            args: {
+                updateCommentInput: {
+                    type: updateCommentInputType
+                }
+            },
+            resolve: async (_, { updateCommentInput }, { user }) => await updateComment(user, updateCommentInput)
+        },
+
+        deleteComment: {
+            type: commentType,
+            args: {
+                commentId: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { commentId }, { user }) => await deleteComment(user, commentId)
         }
     },
 });

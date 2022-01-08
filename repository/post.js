@@ -59,7 +59,8 @@ module.exports.updatePost = async (user, { id, title, text }) => {
             text
         }, {
             where: {
-                id
+                id,
+                userId: user.id
             }
         });
 
@@ -72,7 +73,7 @@ module.exports.updatePost = async (user, { id, title, text }) => {
 }
 
 // DELETE
-module.exports.deletePost = async (user, postId) => {
+module.exports.deletePost = async (user, id) => {
 
     // only authenticated users can delete their posts
     if (!user) {
@@ -80,7 +81,12 @@ module.exports.deletePost = async (user, postId) => {
     }
 
     try {
-        const post = await db.Post.findByPk(postId);
+        const post = await db.Post.findOne({
+            where: {
+                id,
+                userId: user.id
+            }
+        });
 
         if (!post) {
             return null;
