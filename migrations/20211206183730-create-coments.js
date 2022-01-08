@@ -17,6 +17,7 @@ module.exports = {
           },
           key: 'id',
         },
+        onDelete: 'cascade'
       },
       postId: {
         type: Sequelize.INTEGER,
@@ -26,7 +27,8 @@ module.exports = {
             tableName: 'Posts'
           },
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       text: {
         type: Sequelize.STRING

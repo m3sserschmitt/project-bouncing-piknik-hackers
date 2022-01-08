@@ -1,6 +1,6 @@
 const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } = require("graphql");
 
-const createUserInputType = new GraphQLInputObjectType({
+module.exports = new GraphQLInputObjectType({
     name: 'CreateUserInput',
     fields: {
         email: {
@@ -20,5 +20,3 @@ const createUserInputType = new GraphQLInputObjectType({
         }
     }
 });
-
-module.exports = createUserInputType;

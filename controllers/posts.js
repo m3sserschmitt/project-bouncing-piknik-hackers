@@ -30,15 +30,13 @@ module.exports.getPostsById = async (req, res) => {
 
 module.exports.createPosts = async (req, res) => {
   const {
-        likes,
-        photo,
+        title,
         text
   } = req.body
 
   try {
     const newPosts = await db.Post.create({
-        likes,
-        photo,
+        title,
         text
     });
 

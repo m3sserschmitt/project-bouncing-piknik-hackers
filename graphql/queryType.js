@@ -49,7 +49,7 @@ const queryType = new GraphQLObjectType({
                     type: new GraphQLNonNull(GraphQLID),
                 }
             },
-            resolve: async (source, { id }) => {
+            resolve: async (_, { id }) => {
                 return await getPostById(id);
             }
         },

@@ -15,7 +15,7 @@ module.exports = {
     */
 
      const data = [];
-     for(let i = 0; i < 100; i++) {
+     for(let i = 0; i < 20; i++) {
        data.push({
          id: i,
          email: faker.internet.email(),

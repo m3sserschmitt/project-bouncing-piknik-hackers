@@ -16,7 +16,7 @@ const postType = new GraphQLObjectType({
         likes: {
             type: GraphQLInt
         },
-        photo: {
+        title: {
             type: GraphQLString
         },
         text: {

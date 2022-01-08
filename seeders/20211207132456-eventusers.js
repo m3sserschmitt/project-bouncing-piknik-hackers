@@ -8,7 +8,7 @@ module.exports = {
     const allEvents = await db.Event.findAll();
     const data = [];
 
-    for(let i = 0; i < 100; i++) {
+    for(let i = 0; i < 20; i++) {
       
     const userId = Math.floor(Math.random() * (allUsers.length - 1));
     const eventId = Math.floor(Math.random() * (allEvents.length - 1));

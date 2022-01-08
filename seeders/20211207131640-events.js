@@ -16,16 +16,17 @@ module.exports = {
     const allUsers = await db.User.findAll();
     const data = [];
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const userId = Math.floor(Math.random() * (allUsers.length - 1));
+      const startDate = faker.date.between('2022-01-01', '2022-12-31');
       data.push({
         id: i,
         name: faker.lorem.word(),
-        address: faker.address.zipCode(),
+        address: faker.address.streetAddress(),
         description: faker.lorem.paragraph(),
         organizerId: userId,
-        startDate: faker.date.between('2022-01-01', '2022-12-31'),
-        endDate: faker.date.future(),
+        startDate,
+        endDate: startDate + Math.floor(Math.random() * 72),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

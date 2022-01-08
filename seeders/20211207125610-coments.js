@@ -10,7 +10,7 @@ module.exports = {
 
     const comments = [];
     
-    for(let i = 0; i < 200; i++) {
+    for(let i = 0; i < 10; i++) {
 
       const userId = Math.floor(Math.random() * (allUsers.length - 1));
       const postId = Math.floor(Math.random() * (allPosts.length - 1));

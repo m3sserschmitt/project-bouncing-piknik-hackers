@@ -17,6 +17,7 @@ module.exports = {
           },
           key: 'id',
         },
+        onDelete: 'cascade'
       },
       eventId: {
         type: Sequelize.INTEGER,
@@ -27,6 +28,7 @@ module.exports = {
           },
           key: 'id',
         },
+        onDelete: 'cascade'
       }
     });
   },

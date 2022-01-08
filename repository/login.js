@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken'),
     db = require('../models');
 
 
-const loginHandler = async ({ email, password }) => {
+module.exports.loginHandler = async ({ email, password }) => {
     const user = await db.User.findOne({
         where: {
             email,
@@ -20,5 +20,3 @@ const loginHandler = async ({ email, password }) => {
         return null;
     }
 }
-
-module.exports = loginHandler;

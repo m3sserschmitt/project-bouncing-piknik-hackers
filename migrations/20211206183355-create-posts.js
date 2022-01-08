@@ -17,18 +17,20 @@ module.exports = {
           },
           key: 'id',
         },
+        onDelete: 'cascade'
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      text: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       likes: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0
-      },
-      photo: {
-        type: Sequelize.STRING
-      },
-      text: {
-        type: Sequelize.STRING,
-        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,

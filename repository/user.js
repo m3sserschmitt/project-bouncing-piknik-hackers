@@ -21,9 +21,7 @@ module.exports.createUser = async ({ email, password, firstName, lastName, birth
 // READ
 module.exports.getUserById = async (id) => {
     try {
-        const user = await db.User.findByPk(id);
-
-        return user;
+        return await db.User.findByPk(id);
 
     } catch (error) {
         console.log('Error on querying database provided user id: ', error);
@@ -34,9 +32,7 @@ module.exports.getUserById = async (id) => {
 
 module.exports.getAllUsers = async () => {
     try {
-        const allUsers = await db.User.findAll();
-
-        return allUsers;
+        return await db.User.findAll();
 
     } catch (error) {
 
@@ -47,7 +43,15 @@ module.exports.getAllUsers = async () => {
 }
 
 // UPDATE
-module.exports.updateUser = async (userId, { email, password, firstName, lastName, birthDate }) => {
+module.exports.updateUser = async (user, { email, password, firstName, lastName, birthDate }) => {
+
+    // user must be authenticated in order to update his data
+    if (!user) {
+        return null;
+    }
+
+    const id = user.id;
+
     try {
 
         await db.User.update({
@@ -59,11 +63,11 @@ module.exports.updateUser = async (userId, { email, password, firstName, lastNam
         }, {
             where:
             {
-                id: userId
+                id
             }
         });
 
-        return await db.User.findByPk(userId);
+        return await db.User.findByPk(id);
 
     } catch (error) {
         console.log('Error on updating user: ', error);
@@ -72,19 +76,26 @@ module.exports.updateUser = async (userId, { email, password, firstName, lastNam
 }
 
 // DELETE
-module.exports.deleteUser = async userId => {
+module.exports.deleteUser = async (user, password) => {
+    
+    // user must be authenticated to delete his account;
+    if(!user)
+    {
+        return null;
+    }
+    
     try {
 
-        let user = await db.User.findByPk(userId);
+        const foundUser = await db.User.findByPk(user.id);
 
-        if(!user)
+        if(!foundUser)
         {
             return null;
         }
 
-        user.destroy();
+        await foundUser.destroy();
 
-        return user;
+        return foundUser;
     } catch (error) {
         console.log('Error on deleting user: ', error);
         return null;

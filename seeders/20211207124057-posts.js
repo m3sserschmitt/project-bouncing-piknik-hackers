@@ -8,14 +8,14 @@ module.exports = {
     const allUsers = await db.User.findAll();
     const posts = [];
     
-    for(let i = 0; i < 200; i++) {
+    for(let i = 0; i < 30; i++) {
       const userId = Math.floor(Math.random() * (allUsers.length - 1));
       posts.push({
         id: i,
         userId,
         likes:faker.datatype.number(),
         text: faker.lorem.paragraphs(),
-        photo: faker.lorem.sentence(),
+        title: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date(),
       })

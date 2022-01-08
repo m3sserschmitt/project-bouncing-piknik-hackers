@@ -25,7 +25,8 @@ module.exports = {
             tableName: 'Users'
           },
           key: 'id',
-        }
+        },
+        onDelete: 'cascade'
       },
       startDate: {
         type: Sequelize.DATE

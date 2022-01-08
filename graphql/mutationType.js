@@ -1,27 +1,28 @@
-const { GraphQLObjectType, GraphQLBoolean, GraphQLString } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull } = require('graphql');
 
-const loginHandler = require('../repository/login');
-
-const { createUser, updateUser, deleteUser } = require('../repository/user');
-
-const createUserInputType = require('./inputTypes/createUserInputType');
-const updateUserInputType = require('./inputTypes/updateUserInputType');
-
+const { loginHandler } = require('../repository/login');
 const loginInputType = require('./inputTypes/loginInputType');
 const loginResultType = require('./types/loginResultType');
 
-const userType = require('./types/userType');
 
-const createPostInputType = require('./inputTypes/createPostInputType');
+const { createUser, updateUser, deleteUser } = require('../repository/user');
+const userType = require('./types/userType');
+const createUserInputType = require('./inputTypes/createUserInputType');
+const updateUserInputType = require('./inputTypes/updateUserInputType');
+
+
+const { createPost, updatePost, deletePost } = require('../repository/post');
 const postType = require('./types/postType');
-const { createPost } = require('../repository/post');
+const createPostInputType = require('./inputTypes/createPostInputType');
+const updatePostInputType = require('./inputTypes/updatePostInputType');
 
 
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
+
     fields: {
 
-        login: { // checked
+        login: {
             type: loginResultType,
             args: {
                 loginInput: {
@@ -34,7 +35,7 @@ const mutationType = new GraphQLObjectType({
             }
         },
 
-        createUser: { // checked
+        createUser: {
             type: userType,
             args: {
                 userInput: {
@@ -47,7 +48,7 @@ const mutationType = new GraphQLObjectType({
             }
         },
 
-        updateUser: {  // checked
+        updateUser: {
             type: userType,
             args: {
                 updateUserInput: {
@@ -56,31 +57,21 @@ const mutationType = new GraphQLObjectType({
             },
             resolve: async (_, { updateUserInput }, { user }) => {
 
-                // check if user is authenticated
-                if (!user) {
-                    return null;
-                }
-
-                return await updateUser(user.id, updateUserInput);
+                return await updateUser(user, updateUserInput);
             }
         },
 
-        deleteUser: { // checked
+        deleteUser: {
             type: userType,
             args: {
                 // request user password when deleting account, for better security
                 userPassword: {
-                    type: GraphQLString
+                    type: new GraphQLNonNull(GraphQLString)
                 }
             },
-            resolve: async (_, __, { user }) => {
+            resolve: async (_, { userPassword }, { user }) => {
 
-                // only authenticated users can delete their account
-                if (!user) {
-                    return null;
-                }
-
-                return await deleteUser(user.id);
+                return await deleteUser(user, userPassword);
             }
         },
 
@@ -91,12 +82,35 @@ const mutationType = new GraphQLObjectType({
                     type: createPostInputType
                 }
             },
-            resolve: async (_, { text, photo }, { user }) => {
-                if (!user) {
-                    return null;
-                }
+            resolve: async (_, { createPostInput }, { user }) => {
 
-                return await createPost(text, photo);
+                return await createPost(user, createPostInput);
+            }
+        },
+
+        updatePost: {
+            type: postType,
+            args: {
+                updatePostInput: {
+                    type: updatePostInputType
+                }
+            },
+            resolve: async (_, { updatePostInput }, { user }) => {
+
+                return await updatePost(user, updatePostInput);
+            }
+        },
+
+        deletePost: {
+            type: postType,
+            args: {
+                postId: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { postId }, { user }) => {
+
+                return await deletePost(user, postId);
             }
         }
     },
