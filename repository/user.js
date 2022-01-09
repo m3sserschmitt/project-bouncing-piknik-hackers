@@ -42,6 +42,25 @@ module.exports.getAllUsers = async () => {
     }
 }
 
+module.exports.getProfile = async (user) => {
+
+    if(!user)
+    {
+        return null;
+    }
+
+    try {
+
+        return await db.User.findByPk(user.id);
+
+    } catch (error)
+    {
+        console.log('Error on querying database for user profile: ', error);
+
+        return null;
+    }
+}
+
 // UPDATE
 module.exports.updateUser = async (user, { email, password, firstName, lastName, birthDate }) => {
 

@@ -87,7 +87,19 @@ module.exports.getFriendshipRequests = async (user) => {
         return await db.Friendship.findAll(
             {
                 where: {
-                    receiverId: user.id
+                    [Op.or]: [
+                        {
+                            senderId: {
+                                [Op.eq]: [user.id]
+                            },
+                        },
+                        {
+                            receiverId: {
+                                [Op.eq]: [user.id]
+                            }
+                        }
+                    ],
+                    status: 'pending'
                 }
             });
 
@@ -184,6 +196,12 @@ module.exports.updateFriendshipRequest = async (user, { id, status }) => {
 
         // if no request found, terminate
         if (!friendshipRequest) {
+            return null;
+        }
+
+        // user cannot accept its own request
+        if(status == "accepted" && friendshipRequest.senderId == user.id)
+        {
             return null;
         }
 

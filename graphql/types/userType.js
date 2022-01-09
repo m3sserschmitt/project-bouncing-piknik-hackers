@@ -20,7 +20,8 @@ const userType = new GraphQLObjectType({
             type: GraphQLString
         },
         birthDate: {
-            type: GraphQLString
+            type: GraphQLString,
+            resolve: async user => user.birthDate.toLocaleDateString("en-US")
         },
         friendsNumber: {
             type: GraphQLString

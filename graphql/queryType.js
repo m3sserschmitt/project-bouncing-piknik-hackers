@@ -8,7 +8,7 @@ const db = require('../models');
 
 
 const userType = require('./types/userType'),
-    { getAllUsers, getUserById } = require("../repository/user");
+    { getAllUsers, getUserById, getProfile } = require("../repository/user");
 
 const postType = require('./types/postType'),
     { getAllPosts, getPostById } = require("../repository/post");
@@ -41,6 +41,11 @@ const queryType = new GraphQLObjectType({
             resolve: async (_, { id }) => {
                 return await getUserById(id);
             }
+        },
+
+        profile: {
+            type: userType,
+            resolve: async (_, __, { user }) => await getProfile(user)
         },
 
         posts: {
