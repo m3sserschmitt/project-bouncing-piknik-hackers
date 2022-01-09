@@ -23,15 +23,22 @@ const postType = new GraphQLObjectType({
         },
         author: {
             type: userType,
-            resolve: async (post) => await post.getUser()
-
+            resolve: async post => await post.getUser()
         },
         likes: {
             type: GraphQLInt
         },
         comments: {
             type: new GraphQLList(commentType),
-            resolve: async (post) => post.getComments()
+            resolve: async post => post.getComments()
+        },
+        createdAt: {
+            type: GraphQLString,
+            resolve: async post => post.createdAt.toLocaleString("en-US")
+        },
+        modifiedAt: {
+            type: GraphQLString,
+            resolve: async post => post.updatedAt.toLocaleString("en-US")
         }
     }
 });

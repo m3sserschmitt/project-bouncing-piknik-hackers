@@ -27,6 +27,14 @@ module.exports = new GraphQLObjectType({
             resolve: async (comment) => {
                 return await comment.getUser();
             }
+        },
+        createdAt: {
+            type: GraphQLString,
+            resolve: async comment => comment.createdAt.toLocaleString("en-US")
+        },
+        modifiedAt: {
+            type: GraphQLString,
+            resolve: async comment => comment.updatedAt.toLocaleString("en-US")
         }
     }
 });
