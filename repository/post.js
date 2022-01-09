@@ -64,7 +64,14 @@ module.exports.updatePost = async (user, { id, title, text }) => {
             }
         });
 
-        return db.Post.findByPk(id);
+        return db.Post.findOne({
+            where: {
+                where: {
+                    id,
+                    userId: user.id
+                }
+            }
+        });
 
     } catch (error) {
         console.log('Error on updating post with provided id: ', error);

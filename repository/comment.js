@@ -81,7 +81,7 @@ module.exports.updateComment = async (user, {id, text}) => {
                 id,
                 userId: user.id
             }
-        })
+        });
 
     } catch (error) {
 

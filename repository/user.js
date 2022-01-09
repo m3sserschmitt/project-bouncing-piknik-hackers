@@ -86,7 +86,12 @@ module.exports.deleteUser = async (user, password) => {
     
     try {
 
-        const foundUser = await db.User.findByPk(user.id);
+        const foundUser = await db.User.findOne({
+            where: {
+                id: user.id,
+                password
+            }
+        });
 
         if(!foundUser)
         {

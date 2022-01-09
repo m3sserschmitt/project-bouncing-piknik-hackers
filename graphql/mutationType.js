@@ -20,6 +20,10 @@ const commentType = require('./types/commentType'),
     updateCommentInputType = require('./inputTypes/updateCommentInputType'),
     { createComment, updateComment, deleteComment } = require('../repository/comment');
 
+const friendshipRequestType = require('./types/friendshipRequestType'),
+    updateFriendshipRequestInputType = require('./inputTypes/updateFriendshipRequestInputType'),
+    { createFriendshipRequest, updateFriendshipRequest } = require('../repository/friendshipRequest');
+
 
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
@@ -69,13 +73,13 @@ const mutationType = new GraphQLObjectType({
             type: userType,
             args: {
                 // request user password when deleting account, for better security
-                userPassword: {
+                password: {
                     type: new GraphQLNonNull(GraphQLString)
                 }
             },
-            resolve: async (_, { userPassword }, { user }) => {
+            resolve: async (_, { password }, { user }) => {
 
-                return await deleteUser(user, userPassword);
+                return await deleteUser(user, password);
             }
         },
 
@@ -108,13 +112,13 @@ const mutationType = new GraphQLObjectType({
         deletePost: {
             type: postType,
             args: {
-                postId: {
+                id: {
                     type: new GraphQLNonNull(GraphQLID)
                 }
             },
-            resolve: async (_, { postId }, { user }) => {
+            resolve: async (_, { id }, { user }) => {
 
-                return await deletePost(user, postId);
+                return await deletePost(user, id);
             }
         },
 
@@ -144,11 +148,31 @@ const mutationType = new GraphQLObjectType({
         deleteComment: {
             type: commentType,
             args: {
-                commentId: {
+                id: {
                     type: new GraphQLNonNull(GraphQLID)
                 }
             },
-            resolve: async (_, { commentId }, { user }) => await deleteComment(user, commentId)
+            resolve: async (_, { id }, { user }) => await deleteComment(user, id)
+        },
+
+        createFriendshipRequest: {
+            type: friendshipRequestType,
+            args: {
+                receiverId: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { receiverId }, { user }) => await createFriendshipRequest(user, receiverId)
+        },
+
+        updateFriendshipRequest: {
+            type: friendshipRequestType,
+            args: {
+                updateFriendshipRequestInput: {
+                    type: updateFriendshipRequestInputType
+                }
+            },
+            resolve: async (_, { updateFriendshipRequestInput }, { user }) => await updateFriendshipRequest(user, updateFriendshipRequestInput)
         }
     },
 });
