@@ -30,13 +30,11 @@ module.exports.getCommentsById = (req, res) => {
 
 module.exports.createComments = async (req, res) => {
   const {
-        likes,
         text
   } = req.body
 
   try {
     const newComments = await db.Comment.create({
-        likes,
         text
     });
 

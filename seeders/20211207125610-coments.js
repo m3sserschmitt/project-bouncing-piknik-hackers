@@ -19,7 +19,6 @@ module.exports = {
         id: i,
         userId,
         postId,
-        likes:faker.datatype.number(),
         text: faker.lorem.paragraphs(),
         createdAt: new Date(),
         updatedAt: new Date(),

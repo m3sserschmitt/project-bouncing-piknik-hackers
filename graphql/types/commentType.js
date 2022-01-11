@@ -19,9 +19,6 @@ module.exports = new GraphQLObjectType({
         text: {
             type: GraphQLString
         },
-        likes: {
-            type: GraphQLInt
-        },
         author: {
             type: userType,
             resolve: async (comment) => {
