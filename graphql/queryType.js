@@ -19,6 +19,8 @@ const commentType = require('./types/commentType'),
 const friendshipRequestType = require('./types/friendshipRequestType');
 const { getFriendshipRequests, getFriendshipRequest } = require('../repository/friendshipRequest');
 
+const eventType = require('./types/eventType'),
+    { getAllEvents, getEventById } = require("../repository/event");
 
 const queryType = new GraphQLObjectType({
     name: "Query",
@@ -64,6 +66,25 @@ const queryType = new GraphQLObjectType({
             },
             resolve: async (_, { id }) => {
                 return await getPostById(id);
+            }
+        },
+
+        events: {
+            type: new GraphQLList(eventType),
+            resolve: async () => {
+                return await getAllEvents();
+            }
+        },
+
+        event: {
+            type: eventType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLID),
+                }
+            },
+            resolve: async (_, { id }) => {
+                return await getEventById(id);
             }
         },
 
