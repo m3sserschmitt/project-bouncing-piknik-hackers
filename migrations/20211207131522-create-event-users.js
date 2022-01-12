@@ -29,7 +29,15 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'cascade'
-      }
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      text: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
