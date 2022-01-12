@@ -24,6 +24,10 @@ const friendshipRequestType = require('./types/friendshipRequestType'),
     updateFriendshipRequestInputType = require('./inputTypes/updateFriendshipRequestInputType'),
     { createFriendshipRequest, updateFriendshipRequest } = require('../repository/friendshipRequest');
 
+const eventType = require('./types/eventType.js'),
+    createEventInputType = require('./inputTypes/createEventInputType'),
+    updateEventInputType = require('./inputTypes/updateEventInputType'),
+    { createEvent, updateEvent, deleteEvent } = require('../repository/event');
 
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
@@ -121,6 +125,46 @@ const mutationType = new GraphQLObjectType({
                 return await deletePost(user, id);
             }
         },
+
+        createEvent: {
+            type: eventType,
+            args: {
+                createEventInput: {
+                    type: createEventInputType
+                }
+            },
+            resolve: async (_, { createEventInput }, { user }) => {
+
+                return await createEvent(user, createEventInput);
+            }
+        },
+
+        updateEvent: {
+            type: eventType,
+            args: {
+                updateEventInput: {
+                    type: updateEventInputType
+                }
+            },
+            resolve: async (_, { updateEventInput }, { user }) => {
+
+                return await updateEvent(user, updateEventInput);
+            }
+        },
+
+        deleteEvent: {
+            type: eventType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { id }, { user }) => {
+
+                return await deleteEvents(user, id);
+            }
+        },
+
 
         createComment: {
             type: commentType,
