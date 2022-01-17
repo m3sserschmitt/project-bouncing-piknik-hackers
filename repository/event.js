@@ -1,20 +1,25 @@
 const db = require('../models');
 
 // CREATE
-module.exports.createEvent = async (user, { text, title }) => {
+module.exports.createEvent = async (user, { name, address, description, startDate, endDate }) => {
 
     // only authenticated users can create events;
     if (!user) {
         return null;
     }
 
+    console.log({ name, address, description, startDate, endDate })
+
     try {
 
         const newEvent = await db.Event.create({
             userId: user.id,
-            eventId: event.id,
-            title,
-            text
+            name,
+            address,
+            description,
+            organizerId: user.id,
+            startDate: new Date(startDate),
+            endDate: new Date(endDate)
         });
 
         return newEvent;
@@ -55,9 +60,10 @@ module.exports.getEventById = async (id) => {
 }
 
 // UPDATE
-module.exports.updateEvent = async (user, {id, text, title}) => {
+module.exports.updateEvent = async (user, {id, name, address, description, startDate, endDate}) => {
 
-    //only authenticated users can update tehir events
+    console.log({name, address, description, startDate, endDate})
+    //only authenticated users can update their events
     if(!user)
     {
         return null;
@@ -66,19 +72,22 @@ module.exports.updateEvent = async (user, {id, text, title}) => {
     try {
 
         await db.Event.update({
-            text,
-            title
+            name, 
+            address, 
+            description, 
+            startDate, 
+            endDate
         }, {
             where: {
                 id,
-                userId: user.id
+                organizerId: user.id
             }
         })
 
         return await db.Event.findOne({
             where: {
                 id,
-                userId: user.id
+                organizerId: user.id
             }
         });
 
@@ -104,7 +113,7 @@ module.exports.deleteEvent = async (user, id) => {
         const event = await db.Event.findOne({
             where: {
                 id,
-                userId: user.id
+                organizerId: user.id
             }
         })
 

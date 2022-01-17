@@ -3,10 +3,19 @@ const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } = require("graph
 module.exports = new GraphQLInputObjectType({
     name: 'CreateEventInput',
     fields: {
-        text: { 
+        name: { 
             type: new GraphQLNonNull(GraphQLString)
         },
-        title: {
+        address: {
+            type: new GraphQLNonNull(GraphQLString)
+        },
+        description: {
+            type: new GraphQLNonNull(GraphQLString)
+        },
+        startDate: {
+            type: new GraphQLNonNull(GraphQLString)
+        },
+        endDate: {
             type: new GraphQLNonNull(GraphQLString)
         }
     }

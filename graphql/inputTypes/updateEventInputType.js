@@ -1,4 +1,4 @@
-const { GraphQLInputObjectType, GraphQLString, GraphQLNonNull, GraphQLID } = require("graphql");
+const { GraphQLInputObjectType, GraphQLNonNull, GraphQLString, GraphQLID } = require("graphql");
 
 module.exports = new GraphQLInputObjectType({
     name: 'UpdateEventInput',
@@ -6,10 +6,19 @@ module.exports = new GraphQLInputObjectType({
         id: {
             type: new GraphQLNonNull(GraphQLID)
         },
-        text: { 
+        name: { 
             type: GraphQLString
         },
-        title: {
+        address: {
+            type: GraphQLString
+        },
+        description: {
+            type: GraphQLString
+        },
+        startDate: {
+            type: GraphQLString
+        },
+        endDate: {
             type: GraphQLString
         }
     }

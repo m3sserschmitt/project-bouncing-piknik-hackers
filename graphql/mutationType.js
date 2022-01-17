@@ -136,10 +136,8 @@ const mutationType = new GraphQLObjectType({
                     type: createEventInputType
                 }
             },
-            resolve: async (_, { createEventInput }, { user }) => {
-
-                return await createEvent(user, createEventInput);
-            }
+            resolve: async (_, { createEventInput }, { user }) => await createEvent(user, createEventInput)
+            
         },
 
         updateEvent: {
@@ -149,10 +147,8 @@ const mutationType = new GraphQLObjectType({
                     type: updateEventInputType
                 }
             },
-            resolve: async (_, { updateEventInput }, { user }) => {
-
-                return await updateEvent(user, updateEventInput);
-            }
+            resolve: async (_, { updateEventInput }, { user }) => await updateEvent(user, updateEventInput)
+            
         },
 
         deleteEvent: {

@@ -13,13 +13,13 @@ module.exports = new GraphQLObjectType({
         id: {
             type: GraphQLID
         },
-        title: {
+        name: {
             type: GraphQLString
         },
-        text: {
+        description: {
             type: GraphQLString
         },
-        author: {
+        organizer: {
             type: userType,
             resolve: async (event) => {
                 return await event.getUser();
