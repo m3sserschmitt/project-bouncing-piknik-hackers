@@ -29,6 +29,9 @@ const eventType = require('./types/eventType.js'),
     updateEventInputType = require('./inputTypes/updateEventInputType'),
     { createEvent, updateEvent, deleteEvent } = require('../repository/event');
 
+const LikeType = require('./types/likeType'),
+    { createLike, deleteLike } = require('../repository/like');
+
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
 
@@ -161,10 +164,9 @@ const mutationType = new GraphQLObjectType({
             },
             resolve: async (_, { id }, { user }) => {
 
-                return await deleteEvents(user, id);
+                return await deleteEvent(user, id);
             }
         },
-
 
         createComment: {
             type: commentType,
@@ -197,6 +199,26 @@ const mutationType = new GraphQLObjectType({
                 }
             },
             resolve: async (_, { id }, { user }) => await deleteComment(user, id)
+        },
+
+        createLike: {
+            type: LikeType,
+            args: {
+                postId: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { postId }, { user }) => await createLike(user, postId)
+        },
+
+        deleteLike: {
+            type: LikeType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { id }, { user }) => await deleteLike(user, id)
         },
 
         createFriendshipRequest: {

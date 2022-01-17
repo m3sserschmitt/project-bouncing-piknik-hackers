@@ -1,7 +1,7 @@
 const db = require('../models');
 
 // CREATE
-module.exports.createLike = async (user, postId ) => {
+module.exports.createLike = async (user, postId) => {
 
     // only authenticated users can like;
     if (!user) {
@@ -10,9 +10,11 @@ module.exports.createLike = async (user, postId ) => {
 
     try {
 
-        const newLike = await db.Like.create({
-            postId,
-            userId: user.id,
+        const [newLike, created] = await db.Like.findOrCreate({
+            where: {
+                postId,
+                userId: user.id,
+            }
         });
 
         return newLike;
@@ -23,6 +25,7 @@ module.exports.createLike = async (user, postId ) => {
         return null;
     }
 }
+
 //READ 
 module.exports.getLikes = async (postId) => {
 
@@ -54,11 +57,11 @@ module.exports.getLike = async (id) => {
         return null;
     }
 }
+
 // DELETE
 module.exports.deleteLike = async (user, id) => {
 
-    if(!user)
-    {
+    if (!user) {
         return null;
     }
 
@@ -71,8 +74,7 @@ module.exports.deleteLike = async (user, id) => {
             }
         })
 
-        if(!like)
-        {
+        if (!like) {
             return null;
         }
 
@@ -82,6 +84,6 @@ module.exports.deleteLike = async (user, id) => {
 
     } catch (error) {
 
-        console.log('Error on unliking post: ', error);
+        console.log('Error on deleting like: ', error);
     }
 }

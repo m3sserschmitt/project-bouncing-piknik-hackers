@@ -22,6 +22,9 @@ const { getFriendshipRequests, getFriendshipRequest } = require('../repository/f
 const eventType = require('./types/eventType'),
     { getAllEvents, getEventById } = require("../repository/event");
 
+const likeType = require('./types/likeType'),
+    { getLikes, getLike } = require('../repository/like');
+
 const queryType = new GraphQLObjectType({
     name: "Query",
     fields: {
@@ -106,6 +109,26 @@ const queryType = new GraphQLObjectType({
                 }
             },
             resolve: async (_, { id }) => await getComment(id)
+        },
+
+        likes: {
+            type: new GraphQLList(likeType),
+            args: {
+                postId: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { postId }) => await getLikes(postId)
+        },
+
+        like: {
+            type: likeType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (_, { id }) => await getLike(id)
         },
 
         friendshipRequests: {

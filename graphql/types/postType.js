@@ -7,6 +7,7 @@ const {
 } = require('graphql');
 
 const userType = require('./userType'),
+    likeType = require('./likeType'),
     commentType = require('./commentType');
 
 const postType = new GraphQLObjectType({
@@ -26,11 +27,12 @@ const postType = new GraphQLObjectType({
             resolve: async post => await post.getUser()
         },
         likes: {
-            type: GraphQLInt
+            type: new GraphQLList(likeType),
+            resolve: async post => await post.getLikes()
         },
         comments: {
             type: new GraphQLList(commentType),
-            resolve: async post => post.getComments()
+            resolve: async post => await post.getComments()
         },
         createdAt: {
             type: GraphQLString,

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.Post.belongsTo(models.User, { foreignKey: "userId" });
       models.Post.hasMany(models.Comment);
-      models.Post.hasMany(models.Likes);
+      models.Post.hasMany(models.Like);
     }
   };
   Post.init({

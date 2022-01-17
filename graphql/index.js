@@ -2,8 +2,8 @@ const {
     GraphQLSchema,
 } = require('graphql');
 
-    const queryType = require('./queryType');
-    const mutationType = require('./mutationType');
+const queryType = require('./queryType');
+const mutationType = require('./mutationType');
 
 const schema = new GraphQLSchema({
     query:queryType,
