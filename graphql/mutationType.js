@@ -27,7 +27,7 @@ const friendshipRequestType = require('./types/friendshipRequestType'),
 const eventType = require('./types/eventType.js'),
     createEventInputType = require('./inputTypes/createEventInputType'),
     updateEventInputType = require('./inputTypes/updateEventInputType'),
-    { createEvent, updateEvent, deleteEvent } = require('../repository/event');
+    { createEvent, updateEvent, deleteEvent, joinEvent, leaveEvent } = require('../repository/event');
 
 const LikeType = require('./types/likeType'),
     { createLike, deleteLike } = require('../repository/like');
@@ -137,7 +137,7 @@ const mutationType = new GraphQLObjectType({
                 }
             },
             resolve: async (_, { createEventInput }, { user }) => await createEvent(user, createEventInput)
-            
+
         },
 
         updateEvent: {
@@ -148,7 +148,7 @@ const mutationType = new GraphQLObjectType({
                 }
             },
             resolve: async (_, { updateEventInput }, { user }) => await updateEvent(user, updateEventInput)
-            
+
         },
 
         deleteEvent: {
@@ -163,6 +163,26 @@ const mutationType = new GraphQLObjectType({
                 return await deleteEvent(user, id);
             }
         },
+
+        // joinEvent: {
+        //     type: eventType,
+        //     args: {
+        //         id: {
+        //             type: new GraphQLNonNull(GraphQLID)
+        //         }
+        //     },
+        //     resolve: async (_, { id }, { user }) => await joinEvent(user, id)
+        // },
+
+        // leaveEvent: {
+        //     type: eventType,
+        //     args: {
+        //         id: {
+        //             type: new GraphQLNonNull(GraphQLID)
+        //         }
+        //     },
+        //     resolve: async (_, { id }, { user }) => await leaveEvent(user, id)
+        // },
 
         createComment: {
             type: commentType,

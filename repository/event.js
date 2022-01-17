@@ -132,3 +132,32 @@ module.exports.deleteEvent = async (user, id) => {
         return null;
     }
 }
+
+module.exports.joinEvent = async (user, id) => {
+
+    if(!user)
+    {
+        return null;
+    }
+
+    try {
+        const event = db.Event.findByPk(id);
+
+        if(!event)
+        {
+            return null;
+        }
+
+        await event.setUser(user);
+
+    } catch (error)
+    {
+
+        console.log('Error on adding user to event: ', error);
+        return null;
+    }
+}
+
+module.exports.leaveEvent = async (user, id) => {
+
+}
