@@ -1,4 +1,7 @@
 'use strict';
+
+const { fa } = require("faker/lib/locales");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
@@ -41,6 +44,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
+      },
+      roleId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       }
     });
   },
