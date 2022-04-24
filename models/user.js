@@ -12,16 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.User.hasMany(models.Post);
       models.User.hasMany(models.Comment);
-      models.User.belongsToMany(models.Event, { through: 'EventUsers' });
-      models.User.belongsTo(models.Role, {
-        foreignKey: 'roleId',
-      });
-    }
 
-    async can(permissionName) {
-      const role = await this.getRole();
-      const permissions = role.permissions;
-      return permissions.indexOf(permissionName) !== -1;
+      models.User.belongsToMany(models.Event, { through: 'EventUsers' });
     }
   };
   User.init({
@@ -30,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     birthDate: DataTypes.DATE,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    friendsNumber: DataTypes.INTEGER,
-    roleId: DataTypes.INTEGER,
+    friendsNumber: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

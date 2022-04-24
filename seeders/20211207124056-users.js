@@ -26,7 +26,6 @@ module.exports = {
          friendsNumber:faker.datatype.number(),
          createdAt: new Date(),
          updatedAt: new Date(),
-         roleId:0,
        });
      }
 

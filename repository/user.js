@@ -1,5 +1,4 @@
 const db = require('../models');
-const Permissions = require('../config/permissions');
 
 // CREATE
 module.exports.createUser = async ({ email, password, firstName, lastName, birthDate }) => {
@@ -66,12 +65,10 @@ module.exports.getProfile = async (user) => {
 module.exports.updateUser = async (user, { email, password, firstName, lastName, birthDate }) => {
 
     // user must be authenticated in order to update his data
-    const hasPermission = await user.can(Permissions.UPDATE_USER);
-
-    if(!hasPermission) {
-      return null;
+    if (!user) {
+        return null;
     }
-  
+
     const id = user.id;
 
     try {
